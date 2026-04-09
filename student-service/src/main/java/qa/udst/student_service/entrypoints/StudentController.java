@@ -1,4 +1,4 @@
-package main.java.qa.udst.student_service.entrypoints;
+package qa.udst.student_service.entrypoints;
 
 import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;

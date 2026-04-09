@@ -1,4 +1,4 @@
-package main.java.qa.udst.student_service.business.domain;
+package qa.udst.student_service.business.domain;
 
 import jakarta.persistence.*;
 

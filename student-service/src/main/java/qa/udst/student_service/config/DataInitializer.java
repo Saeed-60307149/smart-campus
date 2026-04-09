@@ -1,4 +1,4 @@
-package main.java.qa.udst.student_service.config;
+package qa.udst.student_service.config;
 
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Bean;

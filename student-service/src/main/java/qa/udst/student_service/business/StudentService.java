@@ -1,4 +1,4 @@
-package main.java.qa.udst.student_service.business;
+package qa.udst.student_service.business;
 
 import org.springframework.stereotype.Service;
 import qa.udst.student_service.business.domain.Student;
