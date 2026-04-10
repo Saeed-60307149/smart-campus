@@ -3,6 +3,7 @@ package qa.udst.course_service.business.domain;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.NotNull;
 
 @Entity
 @Table(name = "courses")
@@ -25,12 +26,12 @@ public class Course {
     private String instructor;
 
     @Column(nullable = false)
+    @NotNull(message = "Capacity is required")
     @Min(value = 1, message = "Capacity must be at least 1")
-    private int capacity;
+    private Integer capacity;
 
     @Column(nullable = false)
-    
-    private int enrolled;
+    private Integer enrolled;
 
     @Column(nullable = false)
     @NotBlank(message = "Schedule is required")
@@ -39,7 +40,7 @@ public class Course {
     public Course() {
     }
 
-    public Course(String courseCode, String title, String instructor, int capacity, String schedule) {
+    public Course(String courseCode, String title, String instructor, Integer capacity, String schedule) {
         this.courseCode = courseCode;
         this.title = title;
         this.instructor = instructor;
@@ -88,19 +89,19 @@ public class Course {
         this.instructor = instructor;
     }
 
-    public int getCapacity() {
+    public Integer getCapacity() {
         return capacity;
     }
 
-    public void setCapacity(int capacity) {
+    public void setCapacity(Integer capacity) {
         this.capacity = capacity;
     }
 
-    public int getEnrolled() {
+    public Integer getEnrolled() {
         return enrolled;
     }
 
-    public void setEnrolled(int enrolled) {
+    public void setEnrolled(Integer enrolled) {
         this.enrolled = enrolled;
     }
 
