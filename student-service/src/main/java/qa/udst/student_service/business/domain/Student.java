@@ -1,6 +1,8 @@
 package qa.udst.student_service.business.domain;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Email;
 
 @Entity
 @Table(name = "students")
@@ -11,15 +13,20 @@ public class Student {
     private Long id;
 
     @Column(nullable = false)
+    @NotBlank(message = "Full name is required")
     private String fullName;
 
     @Column(nullable = false, unique = true)
+    @NotBlank(message = "Email is required")
+    @Email(message = "Email must be valid")
     private String email;
 
     @Column(nullable = false, unique = true)
+    @NotBlank(message = "Student ID is required")
     private String studentId;
 
     @Column(nullable = false)
+    @NotBlank(message = "Major is required")
     private String major;
 
     public Student() {}

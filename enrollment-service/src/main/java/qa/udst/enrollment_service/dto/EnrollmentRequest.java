@@ -1,7 +1,14 @@
 package qa.udst.enrollment_service.dto;
 
+import jakarta.validation.constraints.NotNull;
+
 public class EnrollmentRequest {
+
+
+    @NotNull(message = "Student ID is required")
     private Long studentId;
+
+    @NotNull(message = "Course ID is required")
     private Long courseId;
 
     public EnrollmentRequest() {

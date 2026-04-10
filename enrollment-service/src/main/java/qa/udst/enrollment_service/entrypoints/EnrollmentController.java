@@ -2,6 +2,8 @@ package qa.udst.enrollment_service.entrypoints;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import jakarta.validation.Valid;
 import qa.udst.enrollment_service.business.EnrollmentService;
 import qa.udst.enrollment_service.business.domain.Enrollment;
 import qa.udst.enrollment_service.dto.EnrollmentRequest;
@@ -35,7 +37,7 @@ public class EnrollmentController {
     }
 
     @PostMapping
-    public ResponseEntity<?> enroll(@RequestBody EnrollmentRequest request) {
+    public ResponseEntity<?> enroll(@Valid @RequestBody EnrollmentRequest request) {
         try {
             Enrollment enrollment = enrollmentService.enroll(request);
             return ResponseEntity.ok(enrollment);
