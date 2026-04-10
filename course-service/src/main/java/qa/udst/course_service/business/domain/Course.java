@@ -29,10 +29,11 @@ public class Course {
     private int capacity;
 
     @Column(nullable = false)
-    @NotBlank(message = "Schedule is required")
+    
     private int enrolled;
 
     @Column(nullable = false)
+    @NotBlank(message = "Schedule is required")
     private String schedule;
 
     public Course() {
