@@ -2,45 +2,45 @@ package qa.udst.student_service.business;
 
 import org.springframework.stereotype.Service;
 import qa.udst.student_service.business.domain.Student;
-import qa.udst.student_service.repository.StudentRepository;
+import qa.udst.student_service.business.ports.StudentRepositoryPort;
 import java.util.List;
 import java.util.Optional;
 
 @Service
 public class StudentService {
 
-    private final StudentRepository studentRepository;
+    private final StudentRepositoryPort studentRepositoryPort;
 
-    public StudentService(StudentRepository studentRepository) {
-        this.studentRepository = studentRepository;
+    public StudentService(StudentRepositoryPort studentRepositoryPort) {
+        this.studentRepositoryPort = studentRepositoryPort;
     }
 
     public List<Student> findAll() {
-        return studentRepository.findAll();
+        return studentRepositoryPort.findAll();
     }
 
     public Optional<Student> findById(Long id) {
-        return studentRepository.findById(id);
+        return studentRepositoryPort.findById(id);
     }
 
     public Optional<Student> findByStudentId(String studentId) {
-        return studentRepository.findByStudentId(studentId);
+        return studentRepositoryPort.findByStudentId(studentId);
     }
 
     public Student create(Student student) {
-        return studentRepository.save(student);
+        return studentRepositoryPort.save(student);
     }
 
     public Student update(Long id, Student updated) {
-        Student existing = studentRepository.findById(id)
+        Student existing = studentRepositoryPort.findById(id)
                 .orElseThrow(() -> new RuntimeException("Student not found with id: " + id));
         existing.setFullName(updated.getFullName());
         existing.setEmail(updated.getEmail());
         existing.setMajor(updated.getMajor());
-        return studentRepository.save(existing);
+        return studentRepositoryPort.save(existing);
     }
 
     public void delete(Long id) {
-        studentRepository.deleteById(id);
+        studentRepositoryPort.deleteById(id);
     }
 }

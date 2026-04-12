@@ -1,13 +1,14 @@
-package qa.udst.enrollment_service.repository;
+package qa.udst.enrollment_service.business.ports;
 
-import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.stereotype.Repository;
 import qa.udst.enrollment_service.business.domain.Enrollment;
 import java.util.List;
+import java.util.Optional;
 
-@Repository
-public interface EnrollmentRepository extends JpaRepository<Enrollment, Long> {
+public interface EnrollmentRepositoryPort {
+    List<Enrollment> findAll();
+    Optional<Enrollment> findById(Long id);
     List<Enrollment> findByStudentId(Long studentId);
     List<Enrollment> findByCourseId(Long courseId);
     boolean existsByStudentIdAndCourseId(Long studentId, Long courseId);
+    Enrollment save(Enrollment enrollment);
 }

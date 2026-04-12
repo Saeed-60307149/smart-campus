@@ -1,21 +1,35 @@
-package qa.udst.student_service.business.domain;
+package qa.udst.student_service.infrastructure;
 
-public class Student {
+import jakarta.persistence.*;
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotBlank;
 
+@Entity
+@Table(name = "students")
+public class StudentEntity {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
+    @Column(nullable = false)
+    @NotBlank(message = "Full name is required")
     private String fullName;
+
+    @Column(nullable = false, unique = true)
+    @NotBlank(message = "Email is required")
+    @Email(message = "Email must be valid")
     private String email;
+
+    @Column(nullable = false, unique = true)
+    @NotBlank(message = "Student ID is required")
     private String studentId;
+
+    @Column(nullable = false)
+    @NotBlank(message = "Major is required")
     private String major;
 
-    public Student() {
-    }
-
-    public Student(String fullName, String email, String studentId, String major) {
-        this.fullName = fullName;
-        this.email = email;
-        this.studentId = studentId;
-        this.major = major;
+    public StudentEntity() {
     }
 
     public Long getId() {

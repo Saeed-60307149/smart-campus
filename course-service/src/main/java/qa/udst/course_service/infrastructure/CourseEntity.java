@@ -1,33 +1,43 @@
-package qa.udst.course_service.business.domain;
+package qa.udst.course_service.infrastructure;
 
-public class Course {
+import jakarta.persistence.*;
+import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 
+@Entity
+@Table(name = "courses")
+public class CourseEntity {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
+    @Column(nullable = false, unique = true)
+    @NotBlank(message = "Course code is required")
     private String courseCode;
+
+    @Column(nullable = false)
+    @NotBlank(message = "Title is required")
     private String title;
+
+    @Column(nullable = false)
+    @NotBlank(message = "Instructor is required")
     private String instructor;
+
+    @Column(nullable = false)
+    @NotNull(message = "Capacity is required")
+    @Min(value = 1, message = "Capacity must be at least 1")
     private Integer capacity;
+
+    @Column(nullable = false)
     private Integer enrolled;
+
+    @Column(nullable = false)
+    @NotBlank(message = "Schedule is required")
     private String schedule;
 
-    public Course() {
-    }
-
-    public Course(String courseCode, String title, String instructor, Integer capacity, String schedule) {
-        this.courseCode = courseCode;
-        this.title = title;
-        this.instructor = instructor;
-        this.capacity = capacity;
-        this.enrolled = 0;
-        this.schedule = schedule;
-    }
-
-    public boolean hasAvailableSeats() {
-        return enrolled < capacity;
-    }
-
-    public void incrementEnrolled() {
-        this.enrolled++;
+    public CourseEntity() {
     }
 
     public Long getId() {

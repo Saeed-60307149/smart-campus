@@ -12,14 +12,18 @@ of separate business capabilities.
 ## Considered Options
 - Layered Monolithic Architecture
 - Microservices Architecture
-- Serverless Architecture
+- Modular Monolith
+
+## Architectural Drivers
+Scalability driver and Reliability driver. The system must scale specific 
+services independently and isolate failures between services.
 
 ## Decision Outcome
-We adopt a Microservices Architecture, decomposing the system into 5 independent 
+We adopt a Microservices Architecture, decomposing the system into independent 
 Spring Boot services: Student Service, Course Service, Enrollment Service, 
 Payment Service, and Notification Service, all accessed through an API Gateway.
 
-### Consequences
+## Consequences
 - Each service can be scaled independently
 - Fault isolation prevents cascading failures
 - Trade-off: higher deployment complexity compared to a monolith

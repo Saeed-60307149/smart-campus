@@ -2,42 +2,42 @@ package qa.udst.course_service.business;
 
 import org.springframework.stereotype.Service;
 import qa.udst.course_service.business.domain.Course;
-import qa.udst.course_service.repository.CourseRepository;
+import qa.udst.course_service.business.ports.CourseRepositoryPort;
 import java.util.List;
 import java.util.Optional;
 
 @Service
 public class CourseService {
 
-    private final CourseRepository courseRepository;
+    private final CourseRepositoryPort courseRepositoryPort;
 
-    public CourseService(CourseRepository courseRepository) {
-        this.courseRepository = courseRepository;
+    public CourseService(CourseRepositoryPort courseRepositoryPort) {
+        this.courseRepositoryPort = courseRepositoryPort;
     }
 
     public List<Course> findAll() {
-        return courseRepository.findAll();
+        return courseRepositoryPort.findAll();
     }
 
     public Optional<Course> findById(Long id) {
-        return courseRepository.findById(id);
+        return courseRepositoryPort.findById(id);
     }
 
     public Optional<Course> findByCourseCode(String courseCode) {
-        return courseRepository.findByCourseCode(courseCode);
+        return courseRepositoryPort.findByCourseCode(courseCode);
     }
 
     public Course create(Course course) {
-        return courseRepository.save(course);
+        return courseRepositoryPort.save(course);
     }
 
     public Course incrementEnrollment(Long id) {
-        Course course = courseRepository.findById(id)
+        Course course = courseRepositoryPort.findById(id)
                 .orElseThrow(() -> new RuntimeException("Course not found with id: " + id));
         if (!course.hasAvailableSeats()) {
             throw new RuntimeException("Course " + course.getCourseCode() + " is full.");
         }
         course.incrementEnrolled();
-        return courseRepository.save(course);
+        return courseRepositoryPort.save(course);
     }
 }

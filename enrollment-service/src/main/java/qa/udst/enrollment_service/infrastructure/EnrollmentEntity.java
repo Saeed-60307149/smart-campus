@@ -1,27 +1,35 @@
-package qa.udst.enrollment_service.business.domain;
+package qa.udst.enrollment_service.infrastructure;
 
+import jakarta.persistence.*;
 import java.time.LocalDateTime;
 
-public class Enrollment {
+@Entity
+@Table(name = "enrollments")
+public class EnrollmentEntity {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
+    @Column(nullable = false)
     private Long studentId;
+
+    @Column(nullable = false)
     private Long courseId;
+
+    @Column(nullable = false)
     private String studentName;
+
+    @Column(nullable = false)
     private String courseCode;
-    private EnrollmentStatus status;
+
+    @Column(nullable = false)
+    private String status;
+
+    @Column(nullable = false)
     private LocalDateTime enrolledAt;
 
-    public Enrollment() {
-    }
-
-    public Enrollment(Long studentId, Long courseId, String studentName, String courseCode) {
-        this.studentId = studentId;
-        this.courseId = courseId;
-        this.studentName = studentName;
-        this.courseCode = courseCode;
-        this.status = EnrollmentStatus.ACTIVE;
-        this.enrolledAt = LocalDateTime.now();
+    public EnrollmentEntity() {
     }
 
     public Long getId() {
@@ -64,11 +72,11 @@ public class Enrollment {
         this.courseCode = courseCode;
     }
 
-    public EnrollmentStatus getStatus() {
+    public String getStatus() {
         return status;
     }
 
-    public void setStatus(EnrollmentStatus status) {
+    public void setStatus(String status) {
         this.status = status;
     }
 

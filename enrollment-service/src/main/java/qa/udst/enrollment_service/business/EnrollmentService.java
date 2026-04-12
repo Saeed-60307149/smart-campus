@@ -4,39 +4,39 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 import qa.udst.enrollment_service.business.domain.Enrollment;
 import qa.udst.enrollment_service.business.domain.EnrollmentStatus;
+import qa.udst.enrollment_service.business.ports.EnrollmentRepositoryPort;
 import qa.udst.enrollment_service.config.WebClientConfig;
 import qa.udst.enrollment_service.dto.CourseResponse;
 import qa.udst.enrollment_service.dto.EnrollmentRequest;
 import qa.udst.enrollment_service.dto.StudentResponse;
-import qa.udst.enrollment_service.repository.EnrollmentRepository;
 import java.util.List;
 import java.util.Optional;
 
 @Service
 public class EnrollmentService {
 
-    private final EnrollmentRepository enrollmentRepository;
+    private final EnrollmentRepositoryPort enrollmentRepositoryPort;
     private final RestTemplate restTemplate;
     private final WebClientConfig webClientConfig;
 
-    public EnrollmentService(EnrollmentRepository enrollmentRepository,
-            RestTemplate restTemplate,
-            WebClientConfig webClientConfig) {
-        this.enrollmentRepository = enrollmentRepository;
+    public EnrollmentService(EnrollmentRepositoryPort enrollmentRepositoryPort,
+                             RestTemplate restTemplate,
+                             WebClientConfig webClientConfig) {
+        this.enrollmentRepositoryPort = enrollmentRepositoryPort;
         this.restTemplate = restTemplate;
         this.webClientConfig = webClientConfig;
     }
 
     public List<Enrollment> findAll() {
-        return enrollmentRepository.findAll();
+        return enrollmentRepositoryPort.findAll();
     }
 
     public Optional<Enrollment> findById(Long id) {
-        return enrollmentRepository.findById(id);
+        return enrollmentRepositoryPort.findById(id);
     }
 
     public List<Enrollment> findByStudentId(Long studentId) {
-        return enrollmentRepository.findByStudentId(studentId);
+        return enrollmentRepositoryPort.findByStudentId(studentId);
     }
 
     public Enrollment enroll(EnrollmentRequest request) {
@@ -68,7 +68,7 @@ public class EnrollmentService {
         }
 
         // Step 3: Check duplicate enrollment
-        if (enrollmentRepository.existsByStudentIdAndCourseId(
+        if (enrollmentRepositoryPort.existsByStudentIdAndCourseId(
                 request.getStudentId(), request.getCourseId())) {
             throw new RuntimeException("Student is already enrolled in this course.");
         }
@@ -88,14 +88,15 @@ public class EnrollmentService {
                 request.getStudentId(),
                 request.getCourseId(),
                 student.getFullName(),
-                course.getCourseCode());
-        return enrollmentRepository.save(enrollment);
+                course.getCourseCode()
+        );
+        return enrollmentRepositoryPort.save(enrollment);
     }
 
     public Enrollment cancelEnrollment(Long id) {
-        Enrollment enrollment = enrollmentRepository.findById(id)
+        Enrollment enrollment = enrollmentRepositoryPort.findById(id)
                 .orElseThrow(() -> new RuntimeException("Enrollment not found with id: " + id));
         enrollment.setStatus(EnrollmentStatus.CANCELLED);
-        return enrollmentRepository.save(enrollment);
+        return enrollmentRepositoryPort.save(enrollment);
     }
 }
